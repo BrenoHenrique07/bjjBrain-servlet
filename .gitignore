@@ -1,0 +1,15 @@
+# Compiled class files
+*.class
+
+# Directories do Maven (se você estiver usando Maven)
+target/
+*.log
+
+# Arquivos de configuração do Eclipse
+.settings/
+
+# Dependências de bibliotecas que podem ser baixadas
+lib/
+*.jar
+
+

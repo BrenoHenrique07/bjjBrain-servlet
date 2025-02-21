@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<!DOCTYPE hibernate-configuration PUBLIC  
+   "-//Hibernate/Hibernate Configuration DTD 5.3//EN"  
+   "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">  
+
+<hibernate-configuration>  
+   <session-factory>  
+      <!-- Configurações do Hibernate -->
+      <property name="hibernate.hbm2ddl.auto">update</property>  
+      <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>  
+      <property name="hibernate.connection.url">${DB_URL}</property> 
+      <property name="hibernate.connection.username">${DB_USER}</property>   
+      <property name="hibernate.connection.password">${DB_PASSWORD}</property>  
+      <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        
+      <!-- Configurações do C3P0 para o pool de conexões -->
+      <property name="hibernate.c3p0.min_size">1</property> <!-- Número mínimo de conexões -->
+      <property name="hibernate.c3p0.max_size">10</property> <!-- Número máximo de conexões -->
+      <property name="hibernate.c3p0.timeout">300</property> <!-- Tempo de espera para obter uma conexão -->
+      <property name="hibernate.c3p0.max_statements">50</property> <!-- Número máximo de declarações preparadas -->
+      <property name="hibernate.c3p0.idle_test_period">3000</property> <!-- Período de inatividade para validação de conexões no pool (em segundos) -->
+      <property name="hibernate.c3p0.validate">true</property> <!-- Valida a conexão antes de usá-la -->
+      <!-- <property name="hibernate.c3p0.acquire_increment">5</property> Quantidade de conexões que são adquiridas de cada vez -->
+      
+      <mapping class="br.com.nobre.aluno.model.Aluno"/>
+      <!-- <mapping resource="employee.hbm.xml"/>   -->
+   </session-factory>  
+</hibernate-configuration>  
