@@ -21,8 +21,8 @@ public class AlunoCreateDao {
 			
 			session.beginTransaction();
 			
-			Aluno alunoCreated = (Aluno) session.save(aluno);
-			alunoResponse = alunoToAlunoDto(alunoCreated);
+			session.save(aluno);
+        	alunoResponse = alunoToAlunoDto(aluno);
 			
 			session.getTransaction().commit();
 			
@@ -37,7 +37,7 @@ public class AlunoCreateDao {
 		
 	}
 	
-	public Aluno alunoDtoToAluno(AlunoRequestDto requestDto) {
+	private Aluno alunoDtoToAluno(AlunoRequestDto requestDto) {
 		
 		Aluno aluno = new Aluno();
 		aluno.setNome(requestDto.nome);
@@ -48,7 +48,7 @@ public class AlunoCreateDao {
 		
 	}
 	
-	public AlunoResponseDto alunoToAlunoDto(Aluno aluno) {
+	private AlunoResponseDto alunoToAlunoDto(Aluno aluno) {
 		
 		AlunoResponseDto responseDto = new AlunoResponseDto(aluno.getId(), aluno.getNome(), aluno.getSobrenome(), Faixa.fromId(aluno.getFaixaId()).getNome());
 		return responseDto;
