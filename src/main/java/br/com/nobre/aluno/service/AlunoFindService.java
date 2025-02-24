@@ -23,6 +23,12 @@ public class AlunoFindService {
 			//not found 404
 		}
 		
+		return createResponse(aluno);
+		
+	}
+	
+	private String createResponse(Aluno aluno) throws JSONException {
+		
 		JSONObject jsonResponse = new JSONObject();
 
 		jsonResponse.put("nome", aluno.getNome());

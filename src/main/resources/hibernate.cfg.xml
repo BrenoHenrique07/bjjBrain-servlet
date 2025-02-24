@@ -23,6 +23,8 @@
       <!-- <property name="hibernate.c3p0.acquire_increment">5</property> Quantidade de conexões que são adquiridas de cada vez -->
       
       <mapping class="br.com.nobre.aluno.model.Aluno"/>
+      <mapping class="br.com.nobre.aula.model.Aula"/>
+      <mapping class="br.com.nobre.aula.model.AulaTipo"/>
       <!-- <mapping resource="employee.hbm.xml"/>   -->
    </session-factory>  
 </hibernate-configuration>  

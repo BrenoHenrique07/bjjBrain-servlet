@@ -1,21 +1,21 @@
-package br.com.nobre.aluno.dao;
+package br.com.nobre.aula.dao;
 
 import org.hibernate.Session;
 
-import br.com.nobre.aluno.model.Aluno;
+import br.com.nobre.aula.model.Aula;
 import br.com.nobre.commons.config.HibernateUtil;
 
-public class AlunoCreateDao {
+public class AulaCreateDao {
 	
-	public Aluno createAluno(Aluno aluno) {
-		
+	public Aula createAula(Aula aula) {
+	
 		Session session = HibernateUtil.openSession();
 		
 		try {
 			
 			session.beginTransaction();
 			
-			session.save(aluno);
+			session.save(aula);
 			session.getTransaction().commit();
 			
 		} catch (Exception e) {
@@ -25,8 +25,8 @@ public class AlunoCreateDao {
 			session.close();
 		}
 
-		return aluno;
+		return aula;
 		
-	}	
+	}
 	
 }
