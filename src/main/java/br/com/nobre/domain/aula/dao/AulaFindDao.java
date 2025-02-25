@@ -11,16 +11,9 @@ public class AulaFindDao {
 	public Aula findAulaById(int id) {
 
 		Session session = HibernateUtil.openSession();
-		
-		Aula aula = null;
-		
-		try {	
-			aula = session.get(Aula.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+
+		Aula aula = session.get(Aula.class, id);
+		session.close();
 
 		return aula;
 		
@@ -30,15 +23,8 @@ public class AulaFindDao {
 		
 		Session session = HibernateUtil.openSession();
 		
-		AulaTipo tipo = null;
-		
-		try {	
-			tipo = session.get(AulaTipo.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+		AulaTipo tipo = session.get(AulaTipo.class, id);
+		session.close();
 
 		return tipo;
 		

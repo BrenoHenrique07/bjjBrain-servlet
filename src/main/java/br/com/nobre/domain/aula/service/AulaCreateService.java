@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import br.com.nobre.commons.exception.dto.NotFoundException;
 import br.com.nobre.commons.utils.DateUtils;
 import br.com.nobre.commons.utils.FormattedToJsonUtil;
 import br.com.nobre.domain.aula.dao.AulaCreateDao;
@@ -24,7 +25,7 @@ public class AulaCreateService {
 		this.aulaFindDao = new AulaFindDao();
 	}
 	
-	public String createAula(HttpServletRequest req) throws JSONException, IOException {
+	public String createAula(HttpServletRequest req) throws JSONException, IOException, NotFoundException {
 		
 		JSONObject jsonObject = FormattedToJsonUtil.requestBodyToJson(req);
 
@@ -35,7 +36,7 @@ public class AulaCreateService {
 		
 	}
 	
-	private Aula requestToAula(JSONObject jsonObject) throws JSONException {
+	private Aula requestToAula(JSONObject jsonObject) throws JSONException, NotFoundException {
 		
 		String horario = jsonObject.getString("horario");
 		String descricao = jsonObject.getString("descricao");
@@ -44,7 +45,7 @@ public class AulaCreateService {
 		AulaTipo tipo = this.aulaFindDao.findTipoById(tipoId);
 		
 		if(tipo == null) {
-			//exception
+			throw new NotFoundException(String.format("Tipo com id %d não existe ou foi inativado", tipoId));
 		}
 		
 		Aula aula = new Aula();

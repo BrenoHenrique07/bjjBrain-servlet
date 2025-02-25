@@ -12,7 +12,7 @@ import br.com.nobre.domain.frequencia.model.Frequencia;
 
 public class FrequenciaFindDao {
 	
-	public int countAll(int start, int limit, Map<String, Object> paramsMap) throws IllegalArgumentException {
+	public long countAll(int start, int limit, Map<String, Object> paramsMap) throws IllegalArgumentException {
 		
 		Session session = HibernateUtil.openSession();
 
@@ -25,7 +25,7 @@ public class FrequenciaFindDao {
 		Long size = (Long) query.getSingleResult();	
 		session.close();
 
-		return size.intValue();
+		return size.longValue();
 		
 	}
 	

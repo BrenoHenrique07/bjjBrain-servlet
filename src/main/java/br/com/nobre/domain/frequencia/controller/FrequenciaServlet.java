@@ -3,6 +3,7 @@ package br.com.nobre.domain.frequencia.controller;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +26,7 @@ public class FrequenciaServlet extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    	
+       
     	try {
     		
             Map<String, String[]> parameterMap = req.getParameterMap();        
@@ -34,11 +35,17 @@ public class FrequenciaServlet extends HttpServlet {
             String response = this.frequenciaFindService.findAll(parameterMap);            
 
             resp.getWriter().write(response);
+            
+        } catch (Exception e) {
+        	
+			e.printStackTrace();
+			
+            req.setAttribute("errorMessage", e.getMessage());
+            req.setAttribute("exceptionClass", e.getClass());
+            
+    		RequestDispatcher dispatcher = req.getRequestDispatcher("/error-handler");
+    		dispatcher.forward(req, resp);
     		
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
-    	
+        }
     }
-
 }

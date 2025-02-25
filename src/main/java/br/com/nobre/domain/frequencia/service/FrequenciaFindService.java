@@ -29,8 +29,7 @@ public class FrequenciaFindService {
 		Page<Frequencia> page = new Page<Frequencia>(new ArrayList<Frequencia>(), 0, 0, 0, 0);
 		
 		try {
-			
-			
+
 			int start = paramsMap.get("start") != null ? Integer.valueOf(paramsMap.get("start").toString()) : 0;
 			int limit = paramsMap.get("limit") != null ? Integer.valueOf(paramsMap.get("limit").toString()) : 100;
 			
@@ -38,7 +37,7 @@ public class FrequenciaFindService {
 				//exception
 			}
 			
-			int size = this.frequenciaFindDao.countAll(start, limit, paramsMap);
+			long size = this.frequenciaFindDao.countAll(start, limit, paramsMap);
 			List<Frequencia> frequenciaList = this.frequenciaFindDao.findAll(start, limit, paramsMap);
 			
 			page = createPage(frequenciaList, start, limit, size);
@@ -67,10 +66,10 @@ public class FrequenciaFindService {
     	
     }
 	
-	private Page<Frequencia> createPage(List<Frequencia> frequenciaList, int start, int limit, int size) {
+	private Page<Frequencia> createPage(List<Frequencia> frequenciaList, int start, int limit, long size) {
 		
 		//validar divisão por zero
-		int totalPage = size / limit;
+		long totalPage = size / limit;
 		
 		if((size % limit) != 0) {
 			totalPage ++;

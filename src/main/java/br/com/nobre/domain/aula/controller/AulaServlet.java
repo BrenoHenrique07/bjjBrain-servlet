@@ -3,13 +3,12 @@ package br.com.nobre.domain.aula.controller;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.codehaus.jettison.json.JSONException;
 
 import br.com.nobre.commons.utils.HttpServletResponseUtil;
 import br.com.nobre.domain.aula.service.AulaCreateService;
@@ -36,7 +35,7 @@ public class AulaServlet extends HttpServlet {
 			String pathInfo = req.getPathInfo(); 
 			
 			if (pathInfo == null || pathInfo.isEmpty()) {
-				//exception path parameter obrigatorio
+				throw new IllegalArgumentException();
 			} 
 
 			String idPath = pathInfo.substring(1);
@@ -47,22 +46,29 @@ public class AulaServlet extends HttpServlet {
 			
 			resp.getWriter().write(response);
 			
-		} catch (JSONException e) {
+		} catch (Exception e) {
+
 			e.printStackTrace();
+			
+            req.setAttribute("errorMessage", e.getMessage());
+            req.setAttribute("exceptionClass", e.getClass());
+            
+    		RequestDispatcher dispatcher = req.getRequestDispatcher("/error-handler");
+    		dispatcher.forward(req, resp);
 		}
 		
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		String pathInfo = req.getPathInfo(); 
-		
-		if (pathInfo != null) {
-			//exception path parameter não pode ser passado
-		} 
 
         try {
+        	
+    		String pathInfo = req.getPathInfo(); 
+    		
+    		if (pathInfo != null && !pathInfo.isEmpty()) {
+    			throw new IllegalArgumentException();
+    		} 
         	
         	HttpServletResponseUtil.getResponseHeaders(resp);
             String response = this.aulaCreateService.createAula(req);
@@ -70,11 +76,15 @@ public class AulaServlet extends HttpServlet {
 			resp.setStatus(HttpURLConnection.HTTP_CREATED);
             resp.getWriter().write(response);
 
-        } catch (JSONException e) {
-
-            e.printStackTrace();
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            resp.getWriter().write("{\"status\":\"erro\",\"mensagem\":\"Erro ao processar JSON\"}");
+        } catch (Exception e) {
+        	
+			e.printStackTrace();
+			
+            req.setAttribute("errorMessage", e.getMessage());
+            req.setAttribute("exceptionClass", e.getClass());
+            
+    		RequestDispatcher dispatcher = req.getRequestDispatcher("/error-handler");
+    		dispatcher.forward(req, resp);
        
 	    }
 		
