@@ -1,4 +1,4 @@
-package br.com.nobre.aula.model;
+package br.com.nobre.domain.aula.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

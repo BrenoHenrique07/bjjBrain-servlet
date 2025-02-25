@@ -1,11 +1,11 @@
-package br.com.nobre.aula.service;
+package br.com.nobre.domain.aula.service;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import br.com.nobre.aula.dao.AulaFindDao;
-import br.com.nobre.aula.model.Aula;
 import br.com.nobre.commons.utils.DateUtils;
+import br.com.nobre.domain.aula.dao.AulaFindDao;
+import br.com.nobre.domain.aula.model.Aula;
 
 public class AulaFindService {
 	
@@ -17,7 +17,7 @@ public class AulaFindService {
 	
 	public String findAulaById(int id) throws JSONException {
 		
-		Aula aula = aulaFindDao.findAulaById(id);
+		Aula aula = this.aulaFindDao.findAulaById(id);
 		
 		if(aula == null) {
 			//not found 404

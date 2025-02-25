@@ -1,4 +1,4 @@
-package br.com.nobre.aluno.model;
+package br.com.nobre.domain.aluno.model;
 
 public enum Faixa {
 	

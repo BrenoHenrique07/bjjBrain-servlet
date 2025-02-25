@@ -1,23 +1,23 @@
-package br.com.nobre.aluno.service;
+package br.com.nobre.domain.aluno.service;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import br.com.nobre.aluno.dao.AlunoFindDao;
-import br.com.nobre.aluno.model.Aluno;
-import br.com.nobre.aluno.model.Faixa;
+import br.com.nobre.domain.aluno.dao.AlunoFindDao;
+import br.com.nobre.domain.aluno.model.Aluno;
+import br.com.nobre.domain.aluno.model.Faixa;
 
 public class AlunoFindService {
 	
 	private AlunoFindDao alunoDao;
 	
 	public AlunoFindService() {
-		alunoDao = new AlunoFindDao();
+		this.alunoDao = new AlunoFindDao();
 	}
 	
 	public String findAlunoById(int alunoId) throws JSONException {
 		
-		Aluno aluno = alunoDao.findAlunoById(alunoId);
+		Aluno aluno = this.alunoDao.findAlunoById(alunoId);
 		
 		if(aluno == null) {
 			//not found 404

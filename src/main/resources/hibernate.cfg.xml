@@ -25,6 +25,7 @@
       <mapping class="br.com.nobre.aluno.model.Aluno"/>
       <mapping class="br.com.nobre.aula.model.Aula"/>
       <mapping class="br.com.nobre.aula.model.AulaTipo"/>
+      <mapping class="br.com.nobre.frequencia.model.Frequencia"/>
       <!-- <mapping resource="employee.hbm.xml"/>   -->
    </session-factory>  
 </hibernate-configuration>  

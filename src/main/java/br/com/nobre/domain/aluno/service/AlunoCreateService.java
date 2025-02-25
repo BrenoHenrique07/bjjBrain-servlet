@@ -1,4 +1,4 @@
-package br.com.nobre.aluno.service;
+package br.com.nobre.domain.aluno.service;
 
 import java.io.IOException;
 
@@ -7,17 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import br.com.nobre.aluno.dao.AlunoCreateDao;
-import br.com.nobre.aluno.model.Aluno;
-import br.com.nobre.aluno.model.Faixa;
 import br.com.nobre.commons.utils.FormattedToJsonUtil;
+import br.com.nobre.domain.aluno.dao.AlunoCreateDao;
+import br.com.nobre.domain.aluno.model.Aluno;
+import br.com.nobre.domain.aluno.model.Faixa;
 
 public class AlunoCreateService {
 	
 	private AlunoCreateDao alunoCreateDao;
 	
 	public AlunoCreateService() {
-		alunoCreateDao = new AlunoCreateDao();
+		this.alunoCreateDao = new AlunoCreateDao();
 	}
 	
 	public String createAluno(HttpServletRequest req) throws JSONException, IOException {
@@ -25,7 +25,7 @@ public class AlunoCreateService {
 		JSONObject jsonObject = FormattedToJsonUtil.requestBodyToJson(req);
 
 		Aluno aluno = requestToAluno(jsonObject);
-		Aluno alunoResponse = alunoCreateDao.createAluno(aluno);
+		Aluno alunoResponse = this.alunoCreateDao.createAluno(aluno);
 
 		return createResponse(alunoResponse);
 		

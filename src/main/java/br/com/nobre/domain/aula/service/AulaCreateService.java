@@ -1,4 +1,4 @@
-package br.com.nobre.aula.service;
+package br.com.nobre.domain.aula.service;
 
 import java.io.IOException;
 
@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import br.com.nobre.aula.dao.AulaCreateDao;
-import br.com.nobre.aula.dao.AulaFindDao;
-import br.com.nobre.aula.model.Aula;
-import br.com.nobre.aula.model.AulaTipo;
 import br.com.nobre.commons.utils.DateUtils;
 import br.com.nobre.commons.utils.FormattedToJsonUtil;
+import br.com.nobre.domain.aula.dao.AulaCreateDao;
+import br.com.nobre.domain.aula.dao.AulaFindDao;
+import br.com.nobre.domain.aula.model.Aula;
+import br.com.nobre.domain.aula.model.AulaTipo;
 
 public class AulaCreateService {
 	
@@ -29,7 +29,7 @@ public class AulaCreateService {
 		JSONObject jsonObject = FormattedToJsonUtil.requestBodyToJson(req);
 
 		Aula aula = requestToAula(jsonObject);
-		aula = aulaCreateDao.createAula(aula);
+		aula = this.aulaCreateDao.createAula(aula);
 		
 		return createResponse(aula);
 		
@@ -41,7 +41,7 @@ public class AulaCreateService {
 		String descricao = jsonObject.getString("descricao");
 		int tipoId = jsonObject.getInt("tipo");
 		
-		AulaTipo tipo = aulaFindDao.findTipoById(tipoId);
+		AulaTipo tipo = this.aulaFindDao.findTipoById(tipoId);
 		
 		if(tipo == null) {
 			//exception

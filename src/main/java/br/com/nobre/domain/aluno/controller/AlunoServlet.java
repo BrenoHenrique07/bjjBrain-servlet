@@ -1,4 +1,4 @@
-package br.com.nobre.aula.controller;
+package br.com.nobre.domain.aluno.controller;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -11,21 +11,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.codehaus.jettison.json.JSONException;
 
-import br.com.nobre.aula.service.AulaCreateService;
-import br.com.nobre.aula.service.AulaFindService;
 import br.com.nobre.commons.utils.HttpServletResponseUtil;
+import br.com.nobre.domain.aluno.service.AlunoCreateService;
+import br.com.nobre.domain.aluno.service.AlunoFindService;
 
-@WebServlet(urlPatterns = "/aula/*")
-public class AulaServlet extends HttpServlet {
-
+@WebServlet(urlPatterns = "/aluno/*")
+public class AlunoServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	
-	private AulaFindService aulaFindService;
-	private AulaCreateService aulaCreateService;
+	private AlunoFindService alunoFindService;
+	private AlunoCreateService alunoCreateService;
 	
-	public AulaServlet() {
-		this.aulaFindService = new AulaFindService();
-		this.aulaCreateService = new AulaCreateService();
+	public AlunoServlet() {
+		this.alunoFindService = new AlunoFindService();
+		this.alunoCreateService = new AlunoCreateService();
 	}
 	
 	@Override
@@ -43,7 +43,7 @@ public class AulaServlet extends HttpServlet {
 			int alunoId = Integer.valueOf(idPath);
 			
 			HttpServletResponseUtil.getResponseHeaders(resp);
-			String response = this.aulaFindService.findAulaById(alunoId);			
+			String response = this.alunoFindService.findAlunoById(alunoId);			
 			
 			resp.getWriter().write(response);
 			
@@ -52,7 +52,7 @@ public class AulaServlet extends HttpServlet {
 		}
 		
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
@@ -65,7 +65,7 @@ public class AulaServlet extends HttpServlet {
         try {
         	
         	HttpServletResponseUtil.getResponseHeaders(resp);
-            String response = this.aulaCreateService.createAula(req);
+            String response = this.alunoCreateService.createAluno(req);
             
 			resp.setStatus(HttpURLConnection.HTTP_CREATED);
             resp.getWriter().write(response);
@@ -77,7 +77,7 @@ public class AulaServlet extends HttpServlet {
             resp.getWriter().write("{\"status\":\"erro\",\"mensagem\":\"Erro ao processar JSON\"}");
        
 	    }
-		
+			
 	}
 	
 }

@@ -1,9 +1,9 @@
-package br.com.nobre.aluno.dao;
+package br.com.nobre.domain.aluno.dao;
 
 import org.hibernate.Session;
 
-import br.com.nobre.aluno.model.Aluno;
 import br.com.nobre.commons.config.HibernateUtil;
+import br.com.nobre.domain.aluno.model.Aluno;
 
 public class AlunoFindDao {
 
