@@ -69,6 +69,7 @@ public class FrequenciaFindService {
 	
 	private Page<Frequencia> createPage(List<Frequencia> frequenciaList, int start, int limit, int size) {
 		
+		//validar divisão por zero
 		int totalPage = size / limit;
 		
 		if((size % limit) != 0) {
