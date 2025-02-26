@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.nobre.commons.utils.HttpServletResponseUtil;
 import br.com.nobre.domain.frequencia.service.FrequenciaFindService;
 
 @WebServlet(urlPatterns = "/frequencia")
@@ -28,9 +27,7 @@ public class FrequenciaServlet extends HttpServlet {
 
 		Map<String, String[]> parameterMap = req.getParameterMap();
 
-		HttpServletResponseUtil.getResponseHeaders(resp);
 		String response = this.frequenciaFindService.findAll(parameterMap);
-
 		resp.getWriter().write(response);
 
 	}

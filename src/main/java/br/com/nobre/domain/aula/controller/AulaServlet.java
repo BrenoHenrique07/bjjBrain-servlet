@@ -2,6 +2,7 @@ package br.com.nobre.domain.aula.controller;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.nobre.commons.utils.HttpServletResponseUtil;
+import br.com.nobre.commons.exception.InvalidParamsException;
 import br.com.nobre.domain.aula.service.AulaCreateService;
 import br.com.nobre.domain.aula.service.AulaFindService;
 
@@ -29,18 +30,13 @@ public class AulaServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String pathInfo = req.getPathInfo();
-
-		if (pathInfo == null || pathInfo.isEmpty()) {
-			throw new IllegalArgumentException();
+		if(containsPathParameter(req.getPathInfo())) {
+			throw new InvalidParamsException("Parâmetro inválido, por favor verficar");
 		}
 
-		String idPath = pathInfo.substring(1);
-		int alunoId = Integer.valueOf(idPath);
-
-		HttpServletResponseUtil.getResponseHeaders(resp);
-		String response = this.aulaFindService.findAulaById(alunoId);
-
+		Map<String, String[]> parameterMap = req.getParameterMap();
+		
+		String response = this.aulaFindService.findAll(parameterMap);
 		resp.getWriter().write(response);
 
 	}
@@ -48,18 +44,19 @@ public class AulaServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String pathInfo = req.getPathInfo();
-
-		if (pathInfo != null && !pathInfo.isEmpty()) {
-			throw new IllegalArgumentException();
+		if(containsPathParameter(req.getPathInfo())) {
+			throw new InvalidParamsException("Parâmetro inválido, por favor verficar");
 		}
-
-		HttpServletResponseUtil.getResponseHeaders(resp);
+		
 		String response = this.aulaCreateService.createAula(req);
 
 		resp.setStatus(HttpURLConnection.HTTP_CREATED);
 		resp.getWriter().write(response);
 
 	}
-
+	
+	private boolean containsPathParameter(String pathParameter) {
+		return pathParameter != null ? true : false;
+	}
+	
 }

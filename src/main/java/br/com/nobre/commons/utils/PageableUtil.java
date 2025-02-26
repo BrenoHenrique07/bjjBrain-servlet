@@ -1,5 +1,10 @@
 package br.com.nobre.commons.utils;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import br.com.nobre.commons.dto.PageDto;
 import br.com.nobre.commons.dto.PageableDto;
 import br.com.nobre.commons.exception.InvalidParamsException;
 
@@ -21,6 +26,34 @@ public class PageableUtil {
 		PageableDto pageableDto = new PageableDto(start, limit);
 		return pageableDto;
 		
+	}
+	
+	public static Map<String, Object> createParamnsMap(Map<String, String[]> parameterMap) {
+
+		Map<String, Object> paramsMap = new HashMap<>();
+
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+			String key = entry.getKey();
+			String[] val = entry.getValue();
+
+			paramsMap.put(key, val[0]);
+
+		}
+
+		return paramsMap;
+
+	}
+
+	public static <T> PageDto<T> createPage(List<T> data, int start, int limit, long size) {
+		
+		int page = limit != 0 ? limit : 1;
+		long totalPage = size / page;
+
+		if ((size % page) != 0) {
+			totalPage++;
+		}
+
+		return new PageDto<T>(data, start, limit, size, totalPage <= 0 ? 1 : totalPage);
 	}
 	
 }

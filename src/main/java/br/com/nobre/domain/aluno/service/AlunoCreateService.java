@@ -22,7 +22,6 @@ public class AlunoCreateService {
 	public String createAluno(HttpServletRequest req) throws IOException {
 		
 		AlunoRequestDto alunoRequestDto = JsonUtil.requestBodyToJson(req, AlunoRequestDto.class);
-
 		Aluno aluno = ConverterAlunoDto.requestToAluno(alunoRequestDto);
 		
 		//TODO validar se faixa id existe

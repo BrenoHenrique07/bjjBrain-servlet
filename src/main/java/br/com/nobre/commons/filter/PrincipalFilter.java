@@ -17,7 +17,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import br.com.nobre.commons.exception.InvalidParamsException;
 import br.com.nobre.commons.exception.NotFoundException;
-import br.com.nobre.commons.utils.HttpServletResponseUtil;
 import br.com.nobre.commons.utils.JsonUtil;
 
 @WebFilter(urlPatterns = "/*")
@@ -26,7 +25,12 @@ public class PrincipalFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
 
 		try {
+			
+			resp.setContentType("application/json");
+			resp.setCharacterEncoding("UTF-8");
+			
 			chain.doFilter(req, resp);
+			
 		} catch (Exception e) {
 
 			String message = "Erro interno no servidor";
@@ -63,7 +67,6 @@ public class PrincipalFilter implements Filter {
 			}
 
 			HttpServletResponse httpResponse = (HttpServletResponse) resp;
-			HttpServletResponseUtil.getResponseHeaders(httpResponse);
 
 			httpResponse.setStatus(statusCode);
 			httpResponse.getWriter().write(error);
