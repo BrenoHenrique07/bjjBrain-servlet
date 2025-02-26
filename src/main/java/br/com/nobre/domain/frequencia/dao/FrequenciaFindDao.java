@@ -40,7 +40,7 @@ public class FrequenciaFindDao {
 		Query query = session.createQuery(hqlBuilder.toString(), Frequencia.class);
 		appendParameters(query, paramsMap);
 
-		query.setFirstResult(start * limit); 
+		query.setFirstResult(start); 
 		query.setMaxResults(limit); 
 
 		List<Frequencia> frequenciaList = query.getResultList();

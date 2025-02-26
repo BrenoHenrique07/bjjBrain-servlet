@@ -4,13 +4,12 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
-
-import br.com.nobre.commons.utils.FormattedToJsonUtil;
+import br.com.nobre.commons.utils.JsonUtil;
 import br.com.nobre.domain.aluno.dao.AlunoCreateDao;
+import br.com.nobre.domain.aluno.dto.AlunoRequestDto;
+import br.com.nobre.domain.aluno.dto.AlunoResponseDto;
+import br.com.nobre.domain.aluno.dto.ConverterAlunoDto;
 import br.com.nobre.domain.aluno.model.Aluno;
-import br.com.nobre.domain.aluno.model.Faixa;
 
 public class AlunoCreateService {
 	
@@ -20,41 +19,18 @@ public class AlunoCreateService {
 		this.alunoCreateDao = new AlunoCreateDao();
 	}
 	
-	public String createAluno(HttpServletRequest req) throws JSONException, IOException {
+	public String createAluno(HttpServletRequest req) throws IOException {
 		
-		JSONObject jsonObject = FormattedToJsonUtil.requestBodyToJson(req);
+		AlunoRequestDto alunoRequestDto = JsonUtil.requestBodyToJson(req, AlunoRequestDto.class);
 
-		Aluno aluno = requestToAluno(jsonObject);
-		Aluno alunoResponse = this.alunoCreateDao.createAluno(aluno);
-
-		return createResponse(alunoResponse);
+		Aluno aluno = ConverterAlunoDto.requestToAluno(alunoRequestDto);
 		
-	}
-
-	private Aluno requestToAluno(JSONObject jsonObject) throws JSONException {
+		//TODO validar se faixa id existe
 		
-		String nome = jsonObject.getString("nome");
-		String sobrenome = jsonObject.getString("sobrenome");
-		int faixaId = jsonObject.getInt("faixaId");
+		aluno = this.alunoCreateDao.createAluno(aluno);
+		AlunoResponseDto alunoResponseDto = ConverterAlunoDto.alunoToResponse(aluno);
 		
-		Aluno aluno = new Aluno();
-		aluno.setNome(nome);
-		aluno.setSobrenome(sobrenome);
-		aluno.setFaixaId(faixaId);
-		
-		return aluno;
-		
-	}
-	
-	private String createResponse(Aluno alunoResponse) throws JSONException {
-		
-		JSONObject jsonResponse = new JSONObject();
-		jsonResponse.put("id", alunoResponse.getId());
-		jsonResponse.put("nome", alunoResponse.getNome());
-		jsonResponse.put("sobrenome", alunoResponse.getSobrenome());	
-		jsonResponse.put("faixa", Faixa.fromId(alunoResponse.getFaixaId()).getNome());
-		
-		return jsonResponse.toString();
+		return JsonUtil.toJson(alunoResponseDto);
 		
 	}
 	

@@ -3,7 +3,6 @@ package br.com.nobre.domain.aula.controller;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,7 +30,7 @@ public class AulaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		try {
-			
+
 			String pathInfo = req.getPathInfo(); 
 			
 			if (pathInfo == null || pathInfo.isEmpty()) {
@@ -46,15 +45,9 @@ public class AulaServlet extends HttpServlet {
 			
 			resp.getWriter().write(response);
 			
+			//TODO retirar esse catch, agora o exception handler é no filter
 		} catch (Exception e) {
 
-			e.printStackTrace();
-			
-            req.setAttribute("errorMessage", e.getMessage());
-            req.setAttribute("exceptionClass", e.getClass());
-            
-    		RequestDispatcher dispatcher = req.getRequestDispatcher("/error-handler");
-    		dispatcher.forward(req, resp);
 		}
 		
 	}
@@ -77,14 +70,7 @@ public class AulaServlet extends HttpServlet {
             resp.getWriter().write(response);
 
         } catch (Exception e) {
-        	
-			e.printStackTrace();
-			
-            req.setAttribute("errorMessage", e.getMessage());
-            req.setAttribute("exceptionClass", e.getClass());
-            
-    		RequestDispatcher dispatcher = req.getRequestDispatcher("/error-handler");
-    		dispatcher.forward(req, resp);
+
        
 	    }
 		
