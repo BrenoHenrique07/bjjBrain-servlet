@@ -12,7 +12,7 @@ public class AulaFindDao {
 
 		Session session = HibernateUtil.openSession();
 
-		Aula aula = session.get(Aula.class, id);
+		Aula aula = session.find(Aula.class, id);
 		session.close();
 
 		return aula;
@@ -23,7 +23,7 @@ public class AulaFindDao {
 		
 		Session session = HibernateUtil.openSession();
 		
-		AulaTipo tipo = session.get(AulaTipo.class, id);
+		AulaTipo tipo = session.find(AulaTipo.class, id);
 		session.close();
 
 		return tipo;

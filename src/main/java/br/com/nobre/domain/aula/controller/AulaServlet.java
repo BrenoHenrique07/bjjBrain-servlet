@@ -17,63 +17,49 @@ import br.com.nobre.domain.aula.service.AulaFindService;
 public class AulaServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private AulaFindService aulaFindService;
 	private AulaCreateService aulaCreateService;
-	
+
 	public AulaServlet() {
 		this.aulaFindService = new AulaFindService();
 		this.aulaCreateService = new AulaCreateService();
 	}
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		try {
 
-			String pathInfo = req.getPathInfo(); 
-			
-			if (pathInfo == null || pathInfo.isEmpty()) {
-				throw new IllegalArgumentException();
-			} 
+		String pathInfo = req.getPathInfo();
 
-			String idPath = pathInfo.substring(1);
-			int alunoId = Integer.valueOf(idPath);
-			
-			HttpServletResponseUtil.getResponseHeaders(resp);
-			String response = this.aulaFindService.findAulaById(alunoId);			
-			
-			resp.getWriter().write(response);
-			
-			//TODO retirar esse catch, agora o exception handler é no filter
-		} catch (Exception e) {
-
+		if (pathInfo == null || pathInfo.isEmpty()) {
+			throw new IllegalArgumentException();
 		}
-		
+
+		String idPath = pathInfo.substring(1);
+		int alunoId = Integer.valueOf(idPath);
+
+		HttpServletResponseUtil.getResponseHeaders(resp);
+		String response = this.aulaFindService.findAulaById(alunoId);
+
+		resp.getWriter().write(response);
+
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        try {
-        	
-    		String pathInfo = req.getPathInfo(); 
-    		
-    		if (pathInfo != null && !pathInfo.isEmpty()) {
-    			throw new IllegalArgumentException();
-    		} 
-        	
-        	HttpServletResponseUtil.getResponseHeaders(resp);
-            String response = this.aulaCreateService.createAula(req);
-            
-			resp.setStatus(HttpURLConnection.HTTP_CREATED);
-            resp.getWriter().write(response);
+		String pathInfo = req.getPathInfo();
 
-        } catch (Exception e) {
+		if (pathInfo != null && !pathInfo.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
 
-       
-	    }
-		
+		HttpServletResponseUtil.getResponseHeaders(resp);
+		String response = this.aulaCreateService.createAula(req);
+
+		resp.setStatus(HttpURLConnection.HTTP_CREATED);
+		resp.getWriter().write(response);
+
 	}
-	
+
 }

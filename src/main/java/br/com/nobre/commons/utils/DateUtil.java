@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DateUtils {
+public class DateUtil {
 
     public static Date ISOUtcToGMTMinus3 (String dateIso) {
     	

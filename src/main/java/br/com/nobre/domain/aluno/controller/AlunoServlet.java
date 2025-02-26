@@ -48,23 +48,17 @@ public class AlunoServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		try {
+		String pathInfo = req.getPathInfo();
 
-			String pathInfo = req.getPathInfo();
-
-			if (pathInfo != null) {
-				throw new IllegalArgumentException();
-			}
-
-			HttpServletResponseUtil.getResponseHeaders(resp);
-			String response = this.alunoCreateService.createAluno(req);
-
-			resp.setStatus(HttpURLConnection.HTTP_CREATED);
-			resp.getWriter().write(response);
-
-		} catch (Exception e) {
-
+		if (pathInfo != null) {
+			throw new IllegalArgumentException();
 		}
+
+		HttpServletResponseUtil.getResponseHeaders(resp);
+		String response = this.alunoCreateService.createAluno(req);
+
+		resp.setStatus(HttpURLConnection.HTTP_CREATED);
+		resp.getWriter().write(response);
 
 	}
 

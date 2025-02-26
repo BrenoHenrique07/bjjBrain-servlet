@@ -10,17 +10,10 @@ public class AlunoFindDao {
 	public Aluno findAlunoById(int id) {
 
 		Session session = HibernateUtil.openSession();
-		
-		Aluno aluno = null;
-		
-		try {	
-			aluno = session.get(Aluno.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
 
+		Aluno aluno = session.find(Aluno.class, id);
+		session.close();
+			
 		return aluno;
 		
 	}

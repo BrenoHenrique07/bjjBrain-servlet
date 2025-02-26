@@ -35,7 +35,7 @@ public class FrequenciaFindService {
 		List<FrequenciaResponseDto> frequenciaResponseDto = ConvertFrequenciaDto.frequenciaListToResponse(frequenciaList);
 		PageDto<FrequenciaResponseDto> page = createPage(frequenciaResponseDto, pageableDto.start, pageableDto.limit, size);
 		
-		return pageToJson(page);
+		return JsonUtil.toJson(page);
 
 	}
 
@@ -66,9 +66,5 @@ public class FrequenciaFindService {
 
 		return new PageDto<FrequenciaResponseDto>(frequenciaList, start, limit, size, totalPage <= 0 ? 1 : totalPage);
 	}
-
-	private String pageToJson(PageDto<FrequenciaResponseDto> page) throws JsonProcessingException {
-		return JsonUtil.toJson(page);
-	}
-
+	
 }
