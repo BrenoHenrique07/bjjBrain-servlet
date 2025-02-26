@@ -10,8 +10,10 @@ import br.com.nobre.commons.dto.PageDto;
 import br.com.nobre.commons.dto.PageableDto;
 import br.com.nobre.commons.exception.InvalidParamsException;
 import br.com.nobre.commons.utils.JsonUtil;
-import br.com.nobre.commons.utils.PageableUtils;
+import br.com.nobre.commons.utils.PageableUtil;
 import br.com.nobre.domain.frequencia.dao.FrequenciaFindDao;
+import br.com.nobre.domain.frequencia.dto.ConvertFrequenciaDto;
+import br.com.nobre.domain.frequencia.dto.FrequenciaResponseDto;
 import br.com.nobre.domain.frequencia.model.Frequencia;
 
 public class FrequenciaFindService {
@@ -25,12 +27,14 @@ public class FrequenciaFindService {
 	public String findAll(Map<String, String[]> parameterMap) throws InvalidParamsException, IllegalArgumentException, JsonProcessingException {
 
 		Map<String, Object> paramsMap = createParamnsMap(parameterMap);
-		PageableDto pageableDto = PageableUtils.convertParamsToPageable(paramsMap.get("start"), paramsMap.get("limit"));
+		PageableDto pageableDto = PageableUtil.convertParamsToPageable(paramsMap.get("start"), paramsMap.get("limit"));
 
 		long size = this.frequenciaFindDao.countAll(pageableDto.start, pageableDto.limit, paramsMap);
 		List<Frequencia> frequenciaList = this.frequenciaFindDao.findAll(pageableDto.start, pageableDto.limit, paramsMap);
-
-		PageDto<Frequencia> page = createPage(frequenciaList, pageableDto.start, pageableDto.limit, size);
+		
+		List<FrequenciaResponseDto> frequenciaResponseDto = ConvertFrequenciaDto.frequenciaListToResponse(frequenciaList);
+		PageDto<FrequenciaResponseDto> page = createPage(frequenciaResponseDto, pageableDto.start, pageableDto.limit, size);
+		
 		return pageToJson(page);
 
 	}
@@ -51,7 +55,7 @@ public class FrequenciaFindService {
 
 	}
 
-	private PageDto<Frequencia> createPage(List<Frequencia> frequenciaList, int start, int limit, long size) {
+	private PageDto<FrequenciaResponseDto> createPage(List<FrequenciaResponseDto> frequenciaList, int start, int limit, long size) {
 		
 		int page = limit != 0 ? limit : 1;
 		long totalPage = size / page;
@@ -60,10 +64,10 @@ public class FrequenciaFindService {
 			totalPage++;
 		}
 
-		return new PageDto<Frequencia>(frequenciaList, start, limit, size, totalPage <= 0 ? 1 : totalPage);
+		return new PageDto<FrequenciaResponseDto>(frequenciaList, start, limit, size, totalPage <= 0 ? 1 : totalPage);
 	}
 
-	private String pageToJson(PageDto<Frequencia> page) throws JsonProcessingException {
+	private String pageToJson(PageDto<FrequenciaResponseDto> page) throws JsonProcessingException {
 		return JsonUtil.toJson(page);
 	}
 

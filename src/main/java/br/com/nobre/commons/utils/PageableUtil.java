@@ -3,16 +3,13 @@ package br.com.nobre.commons.utils;
 import br.com.nobre.commons.dto.PageableDto;
 import br.com.nobre.commons.exception.InvalidParamsException;
 
-public class PageableUtils {
+public class PageableUtil {
 	
 	public static PageableDto convertParamsToPageable(Object startParam, Object limitParam) throws InvalidParamsException {
 		
 		int start = startParam != null ? Integer.valueOf(startParam.toString()) : 0;
 		int limit = limitParam != null ? Integer.valueOf(limitParam.toString()) : 100;
-		
-		System.out.println(start);
-		System.out.println(limit);
-		
+
 		if(start < 0 || limit < 0) {
 			throw new InvalidParamsException("Os parâmetros de paginação não podem ser menores que 0");
 		}

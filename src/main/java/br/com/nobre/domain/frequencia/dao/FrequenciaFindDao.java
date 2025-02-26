@@ -34,7 +34,11 @@ public class FrequenciaFindDao {
 
 		Session session = HibernateUtil.openSession();
 
-		StringBuilder hqlBuilder = new StringBuilder("SELECT f FROM Frequencia f WHERE 1=1");
+		StringBuilder hqlBuilder = new StringBuilder(" SELECT f FROM Frequencia f ");
+		hqlBuilder.append(" JOIN FETCH f.aluno a ");
+		hqlBuilder.append(" JOIN FETCH f.aula au ");
+		hqlBuilder.append(" JOIN FETCH au.tipo ");
+		hqlBuilder.append(" WHERE 1=1 ");
 		appendFilters(hqlBuilder, paramsMap);
 
 		Query query = session.createQuery(hqlBuilder.toString(), Frequencia.class);
