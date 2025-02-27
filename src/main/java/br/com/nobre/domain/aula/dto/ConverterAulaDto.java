@@ -21,7 +21,10 @@ public class ConverterAulaDto {
 	}
 	
 	public static AulaResponseDto aulaToResponse(Aula aula) {
-		AulaResponseDto aulaResponseDto = new AulaResponseDto(aula.getId(), DateUtil.GMTMinus3ToISOUtc(aula.getHorario()), aula.getDescricao(), aula.getTipo());
+		
+		AulaTipoDto tipo = new AulaTipoDto(aula.getTipo().getId(), aula.getTipo().getTipo());
+		AulaResponseDto aulaResponseDto = new AulaResponseDto(aula.getId(), DateUtil.GMTMinus3ToISOUtc(aula.getHorario()), aula.getDescricao(), tipo);
+		
 		return aulaResponseDto;
 	}
 	
@@ -30,8 +33,12 @@ public class ConverterAulaDto {
 		List<AulaResponseDto> aulaResponseList = new ArrayList<>();
 		
 		for (Aula aula : aulaList) {
-			AulaResponseDto aulaResponseDto = new AulaResponseDto(aula.getId(), DateUtil.GMTMinus3ToISOUtc(aula.getHorario()), aula.getDescricao(), aula.getTipo());
+			
+			AulaTipoDto tipo = new AulaTipoDto(aula.getTipo().getId(), aula.getTipo().getTipo());
+			AulaResponseDto aulaResponseDto = new AulaResponseDto(aula.getId(), DateUtil.GMTMinus3ToISOUtc(aula.getHorario()), aula.getDescricao(), tipo);
+			
 			aulaResponseList.add(aulaResponseDto);	
+			
 		}
 		
 		return aulaResponseList;

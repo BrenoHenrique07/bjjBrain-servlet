@@ -4,12 +4,14 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import br.com.nobre.commons.exception.NotFoundException;
 import br.com.nobre.commons.utils.JsonUtil;
 import br.com.nobre.domain.aluno.dao.AlunoCreateDao;
 import br.com.nobre.domain.aluno.dto.AlunoRequestDto;
 import br.com.nobre.domain.aluno.dto.AlunoResponseDto;
 import br.com.nobre.domain.aluno.dto.ConverterAlunoDto;
 import br.com.nobre.domain.aluno.model.Aluno;
+import br.com.nobre.domain.aluno.model.Faixa;
 
 public class AlunoCreateService {
 	
@@ -22,9 +24,12 @@ public class AlunoCreateService {
 	public String createAluno(HttpServletRequest req) throws IOException {
 		
 		AlunoRequestDto alunoRequestDto = JsonUtil.requestBodyToJson(req, AlunoRequestDto.class);
-		Aluno aluno = ConverterAlunoDto.requestToAluno(alunoRequestDto);
 		
-		//TODO validar se faixa id existe
+		if(!Faixa.faixaExists(alunoRequestDto.faixaId)) {
+			throw new NotFoundException("Faixa com id " + alunoRequestDto.faixaId + " não encontrada.");
+		}
+		
+		Aluno aluno = ConverterAlunoDto.requestToAluno(alunoRequestDto);
 		
 		aluno = this.alunoCreateDao.createAluno(aluno);
 		AlunoResponseDto alunoResponseDto = ConverterAlunoDto.alunoToResponse(aluno);

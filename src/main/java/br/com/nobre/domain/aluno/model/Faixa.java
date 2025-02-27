@@ -32,6 +32,16 @@ public enum Faixa {
 		}
 		throw new IllegalArgumentException("Faixa com id " + id + " não encontrada.");
 	}
+	
+	public static boolean faixaExists(int id) {
+		for (Faixa faixa : values()) {
+			if (faixa.getId() == id) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }
 
 

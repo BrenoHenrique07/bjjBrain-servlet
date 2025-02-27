@@ -26,6 +26,8 @@ public class PrincipalFilter implements Filter {
 
 		try {
 			
+			req.setCharacterEncoding("UTF-8");
+			
 			resp.setContentType("application/json");
 			resp.setCharacterEncoding("UTF-8");
 			
