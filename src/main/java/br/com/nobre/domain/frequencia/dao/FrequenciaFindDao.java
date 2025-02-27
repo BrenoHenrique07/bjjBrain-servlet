@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
 
@@ -19,17 +20,16 @@ public class FrequenciaFindDao {
 		StringBuilder hqlBuilder = new StringBuilder("SELECT count(f) FROM Frequencia f WHERE 1=1");
 		appendFilters(hqlBuilder, paramsMap);
 
-		Query query = session.createQuery(hqlBuilder.toString(), Long.class);
+		TypedQuery<Long> query = session.createQuery(hqlBuilder.toString(), Long.class);
 		appendParameters(query, paramsMap);
 
-		Long size = (Long) query.getSingleResult();	
+		Long size = query.getSingleResult();	
 		session.close();
 
 		return size.longValue();
 		
 	}
 	
-	@SuppressWarnings("unchecked")
 	public List<Frequencia> findAll(int start, int limit, Map<String, Object> paramsMap) throws IllegalArgumentException {
 
 		Session session = HibernateUtil.openSession();
@@ -41,7 +41,7 @@ public class FrequenciaFindDao {
 		hqlBuilder.append(" WHERE 1=1 ");
 		appendFilters(hqlBuilder, paramsMap);
 
-		Query query = session.createQuery(hqlBuilder.toString(), Frequencia.class);
+		TypedQuery<Frequencia> query = session.createQuery(hqlBuilder.toString(), Frequencia.class);
 		appendParameters(query, paramsMap);
 
 		query.setFirstResult(start); 

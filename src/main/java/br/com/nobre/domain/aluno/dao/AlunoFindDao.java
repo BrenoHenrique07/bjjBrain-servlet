@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
 
@@ -19,17 +20,16 @@ public class AlunoFindDao {
 		StringBuilder hqlBuilder = new StringBuilder("SELECT count(a) FROM Aluno a WHERE 1=1");
 		appendFilters(hqlBuilder, paramsMap);
 
-		Query query = session.createQuery(hqlBuilder.toString(), Long.class);
+		TypedQuery<Long> query = session.createQuery(hqlBuilder.toString(), Long.class);
 		appendParameters(query, paramsMap);
 
-		Long size = (Long) query.getSingleResult();	
+		Long size = query.getSingleResult();	
 		session.close();
 
 		return size.longValue();
 		
 	}
 	
-	@SuppressWarnings("unchecked")
 	public List<Aluno> findAll(int start, int limit, Map<String, Object> paramsMap) {
 
 		Session session = HibernateUtil.openSession();
@@ -38,7 +38,7 @@ public class AlunoFindDao {
 		hqlBuilder.append(" SELECT a FROM Aluno a WHERE 1=1 ");
 		appendFilters(hqlBuilder, paramsMap);
 		
-		Query query = session.createQuery(hqlBuilder.toString(), Aluno.class);
+		TypedQuery<Aluno> query = session.createQuery(hqlBuilder.toString(), Aluno.class);
 		appendParameters(query, paramsMap);
 
 		query.setFirstResult(start); 

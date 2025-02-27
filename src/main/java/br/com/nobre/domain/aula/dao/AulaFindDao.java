@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
 
@@ -28,20 +29,19 @@ public class AulaFindDao {
 		
 		Session session = HibernateUtil.openSession();
 
-		StringBuilder hqlBuilder = new StringBuilder("SELECT count(a) FROM Aula a WHERE 1=1");
+		StringBuilder hqlBuilder = new StringBuilder("SELECT count(a) FROM Aula a WHERE 1=1 ");
 		appendFilters(hqlBuilder, paramsMap);
 
-		Query query = session.createQuery(hqlBuilder.toString(), Long.class);
+		TypedQuery<Long> query = session.createQuery(hqlBuilder.toString(), Long.class);
 		appendParameters(query, paramsMap);
 
-		Long size = (Long) query.getSingleResult();	
+		Long size = query.getSingleResult();	
 		session.close();
 
 		return size.longValue();
 		
 	}
 	
-	@SuppressWarnings("unchecked")
 	public List<Aula> findAll(int start, int limit, Map<String, Object> paramsMap) {
 
 		Session session = HibernateUtil.openSession();
@@ -53,7 +53,7 @@ public class AulaFindDao {
 		
 		appendFilters(hqlBuilder, paramsMap);
 		
-		Query query = session.createQuery(hqlBuilder.toString(), Aula.class);
+		TypedQuery<Aula> query = session.createQuery(hqlBuilder.toString(), Aula.class);
 		appendParameters(query, paramsMap);
 
 		query.setFirstResult(start); 
