@@ -44,7 +44,7 @@ public class AulaServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		
 		if(ParameterUtil.containsPathParameter(req.getPathInfo())) {
 			throw new InvalidParamsException("Parâmetro inválido, por favor verficar");
 		}

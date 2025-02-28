@@ -1,6 +1,7 @@
 package br.com.nobre.commons.utils;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -34,4 +35,15 @@ public class DateUtil {
 
     }
     
+
+    public static LocalTime HourUTCToHourGMTMinus3 (String hourPlus3) {
+
+        LocalTime hour = LocalTime.parse(hourPlus3);
+        LocalTime hourInGMTMinus3 = hour.minusHours(3);
+        
+        return hourInGMTMinus3;
+        
+    }
+
+
 }

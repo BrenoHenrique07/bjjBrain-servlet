@@ -1,5 +1,7 @@
 package br.com.nobre.domain.frequencia.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +16,9 @@ import br.com.nobre.domain.aula.model.Aula;
 
 @Entity
 @Table(name = "frequencia")
-public class Frequencia {
+public class Frequencia implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

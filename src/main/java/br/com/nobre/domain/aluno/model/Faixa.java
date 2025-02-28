@@ -30,7 +30,7 @@ public enum Faixa {
 				return faixa;
 			}
 		}
-		throw new IllegalArgumentException("Faixa com id " + id + " não encontrada.");
+		throw new IllegalArgumentException(String.format("Faixa com id %d não existe", id));
 	}
 	
 	public static boolean faixaExists(int id) {
