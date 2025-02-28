@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.nobre.domain.aluno.model.Aluno;
-import br.com.nobre.domain.aluno.model.Faixa;
 
 public class ConverterAlunoDto {
 	
@@ -25,7 +24,7 @@ public class ConverterAlunoDto {
 		
 		for (Aluno aluno : alunoList) {
 			
-			AlunoResponseDto alunoResponseDto = new AlunoResponseDto(aluno.getId(), aluno.getNome(), aluno.getSobrenome(), Faixa.fromId(aluno.getFaixaId()));			
+			AlunoResponseDto alunoResponseDto = alunoToResponse(aluno);		
 			alunoResponseList.add(alunoResponseDto);
 			
 		}
@@ -36,7 +35,7 @@ public class ConverterAlunoDto {
 	
 	public static AlunoResponseDto alunoToResponse(Aluno aluno) {
 		
-		AlunoResponseDto alunoResponseDto = new AlunoResponseDto(aluno.getId(), aluno.getNome(), aluno.getSobrenome(), Faixa.fromId(aluno.getFaixaId()));			
+		AlunoResponseDto alunoResponseDto = new AlunoResponseDto(aluno);			
 		return alunoResponseDto;
 		
 	}

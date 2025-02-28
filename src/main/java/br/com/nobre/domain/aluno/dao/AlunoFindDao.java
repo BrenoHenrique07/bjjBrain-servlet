@@ -12,7 +12,18 @@ import br.com.nobre.commons.config.HibernateUtil;
 import br.com.nobre.domain.aluno.model.Aluno;
 
 public class AlunoFindDao {
+	
+	public Aluno findById(int id) {
+		
+		Session session = HibernateUtil.openSession();
 
+		Aluno aluno = session.find(Aluno.class, id);
+		session.close();
+
+		return aluno;
+		
+	}
+	
 	public long countAll(int start, int limit, Map<String, Object> paramsMap) throws IllegalArgumentException {
 		
 		Session session = HibernateUtil.openSession();
@@ -58,7 +69,11 @@ public class AlunoFindDao {
 		}
 		
 		if (paramsMap.containsKey("id")) {
-			hqlBuilder.append(" AND a.id = :id");
+			hqlBuilder.append(" AND a.id = :id ");
+		}
+		
+		if(paramsMap.containsKey("ativo")) {
+			hqlBuilder.append(" AND a.ativo = :ativo ");
 		}
 		
 	}
@@ -70,6 +85,11 @@ public class AlunoFindDao {
 			if (paramsMap.containsKey("id")) {
 				int alunoId = Integer.valueOf((String) paramsMap.get("id"));
 				query.setParameter("id", alunoId);
+			}
+			
+			if (paramsMap.containsKey("ativo")) {
+				boolean ativo = Boolean.parseBoolean((String) paramsMap.get("ativo"));
+				query.setParameter("ativo", ativo);
 			}
 			
 		} catch (NumberFormatException e) {

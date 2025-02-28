@@ -5,16 +5,16 @@ import org.hibernate.Session;
 import br.com.nobre.commons.config.HibernateUtil;
 import br.com.nobre.domain.aluno.model.Aluno;
 
-public class AlunoCreateDao {
-	
-	public Aluno createAluno(Aluno aluno) {
+public class AlunoUpdateDao {
+
+	public void update(Aluno aluno) {
 		
 		Session session = HibernateUtil.openSession();
 		
 		try {
 			
 			session.beginTransaction();
-			session.save(aluno);
+			session.update(aluno);
 			session.getTransaction().commit();
 			
 		} catch (Exception e) {
@@ -24,8 +24,6 @@ public class AlunoCreateDao {
 			session.close();
 		}
 
-		return aluno;
-		
 	}	
-	
+
 }

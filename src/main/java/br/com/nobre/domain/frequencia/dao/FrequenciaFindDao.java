@@ -17,7 +17,7 @@ public class FrequenciaFindDao {
 		
 		Session session = HibernateUtil.openSession();
 
-		StringBuilder hqlBuilder = new StringBuilder("SELECT count(f) FROM Frequencia f WHERE 1=1");
+		StringBuilder hqlBuilder = new StringBuilder("SELECT count(f) FROM Frequencia f WHERE 1=1 ");
 		appendFilters(hqlBuilder, paramsMap);
 
 		TypedQuery<Long> query = session.createQuery(hqlBuilder.toString(), Long.class);
@@ -61,11 +61,11 @@ public class FrequenciaFindDao {
 		}
 		
 		if (paramsMap.containsKey("alunoId")) {
-			hqlBuilder.append(" AND f.aluno.id = :alunoId");
+			hqlBuilder.append(" AND f.aluno.id = :alunoId ");
 		}
 
 		if (paramsMap.containsKey("aulaId")) {
-			hqlBuilder.append(" AND f.aula.id = :aulaId");
+			hqlBuilder.append(" AND f.aula.id = :aulaId ");
 		}
 		
 	}

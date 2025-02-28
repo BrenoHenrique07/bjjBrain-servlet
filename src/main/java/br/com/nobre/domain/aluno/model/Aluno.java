@@ -28,6 +28,9 @@ public class Aluno implements Serializable {
 	@Column(name = "FAIXA_ID")
 	private int faixaId;
 
+	@Column(name = "ATIVO")
+	private boolean ativo;
+
 	public int getId() {
 		return id;
 	}
@@ -58,6 +61,14 @@ public class Aluno implements Serializable {
 
 	public void setFaixaId(int faixaId) {
 		this.faixaId = faixaId;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }

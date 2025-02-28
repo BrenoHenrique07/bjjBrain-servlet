@@ -14,7 +14,7 @@ import br.com.nobre.domain.aula.model.AulaTipo;
 
 public class AulaFindDao {
 	
-	public AulaTipo findTipoById(int id ) {
+	public AulaTipo findTipoById(int id) {
 		
 		Session session = HibernateUtil.openSession();
 		

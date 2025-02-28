@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.nobre.commons.exception.InvalidParamsException;
+import br.com.nobre.commons.utils.ParameterUtil;
 import br.com.nobre.domain.aula.service.AulaCreateService;
 import br.com.nobre.domain.aula.service.AulaFindService;
 
@@ -30,7 +31,7 @@ public class AulaServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		if(containsPathParameter(req.getPathInfo())) {
+		if(ParameterUtil.containsPathParameter(req.getPathInfo())) {
 			throw new InvalidParamsException("Parâmetro inválido, por favor verficar");
 		}
 
@@ -44,7 +45,7 @@ public class AulaServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		if(containsPathParameter(req.getPathInfo())) {
+		if(ParameterUtil.containsPathParameter(req.getPathInfo())) {
 			throw new InvalidParamsException("Parâmetro inválido, por favor verficar");
 		}
 		
@@ -53,10 +54,6 @@ public class AulaServlet extends HttpServlet {
 		resp.setStatus(HttpURLConnection.HTTP_CREATED);
 		resp.getWriter().write(response);
 
-	}
-	
-	private boolean containsPathParameter(String pathParameter) {
-		return pathParameter != null ? true : false;
 	}
 	
 }

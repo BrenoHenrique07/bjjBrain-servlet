@@ -1,5 +1,6 @@
 package br.com.nobre.domain.aluno.dto;
 
+import br.com.nobre.domain.aluno.model.Aluno;
 import br.com.nobre.domain.aluno.model.Faixa;
 
 public class AlunoResponseDto {
@@ -8,12 +9,14 @@ public class AlunoResponseDto {
 	public final String nome;
 	public final String sobrenome;
 	public final Faixa faixa;
+	public final boolean ativo;
 	
-	public AlunoResponseDto(int id, String nome, String sobrenome, Faixa faixa) {
-		this.id = id;
-		this.nome = nome;
-		this.sobrenome = sobrenome;
-		this.faixa = faixa;
+	public AlunoResponseDto(Aluno aluno) {
+		this.id = aluno.getId();
+		this.nome = aluno.getNome();
+		this.sobrenome = aluno.getSobrenome();
+		this.faixa = Faixa.fromId(aluno.getFaixaId());
+		this.ativo = aluno.isAtivo();
 	}
-	
+
 }

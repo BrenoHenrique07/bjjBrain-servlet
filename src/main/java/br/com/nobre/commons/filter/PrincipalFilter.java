@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 import br.com.nobre.commons.exception.InvalidParamsException;
 import br.com.nobre.commons.exception.NotFoundException;
@@ -59,6 +60,9 @@ public class PrincipalFilter implements Filter {
 					statusCode = HttpURLConnection.HTTP_BAD_REQUEST;
 					message = "Argumento inválido, por favor verifique a requisição";
 
+				} else if (e instanceof UnrecognizedPropertyException) {
+					statusCode = HttpURLConnection.HTTP_BAD_REQUEST;
+					message = "Parâmetro do corpo da requisição inválido, por favor verifique a requisição";
 				}
 
 				errorMap.put("error", message);

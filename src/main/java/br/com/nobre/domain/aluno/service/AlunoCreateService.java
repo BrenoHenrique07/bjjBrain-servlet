@@ -30,6 +30,7 @@ public class AlunoCreateService {
 		}
 		
 		Aluno aluno = ConverterAlunoDto.requestToAluno(alunoRequestDto);
+		aluno.setAtivo(true);
 		
 		aluno = this.alunoCreateDao.createAluno(aluno);
 		AlunoResponseDto alunoResponseDto = ConverterAlunoDto.alunoToResponse(aluno);
